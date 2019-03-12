@@ -10,7 +10,7 @@ import {
   sendMessageVariables
 } from "../../types/api";
 import { USER_PROFILE } from "../../sharedQueriesLocal";
-import { GET_CHAT, SEND_MESSAGE } from "./ChatQueries";
+import { GET_CHAT, SEND_MESSAGE, SUBSCRIBE_TO_MESSAGES } from "./ChatQueries";
 
 interface IProps extends RouteComponentProps<any> {}
 interface IState {
@@ -45,24 +45,65 @@ class ChatContainer extends React.Component<IProps, IState> {
             query={GET_CHAT}
             variables={{ chatId: parseInt(chatId, 10) }}
           >
-            {({ data, loading }) => (
-              <SendMessageMutation mutation={SEND_MESSAGE}>
-                {sendMessageFn => {
-                  this.sendMessageFn = sendMessageFn;
+            {({ data, loading, subscribeToMore }) => {
+              const subscribeToMoreOptions = {
+                document: SUBSCRIBE_TO_MESSAGES,
+                updateQuery: (prev, subscriptionData) => {
+                  if (!subscriptionData.data) {
+                    return prev;
+                  }
+                  const {data:{MessageSubscription}}=subscriptionData;
+                    const {GetChat:{chat:{messages}}}=prev;
 
-                  return (
-                    <ChatPresenter
-                      data={data}
-                      loading={loading}
-                      userData={userData}
-                      messageText={message}
-                      onInputChange={this.onInputChange}
-                      onSubmit={this.onSubmit}
-                    />
-                  );
-                }}
-              </SendMessageMutation>
-            )}
+                  if(messages.length>0){
+                    const newMessageId = MessageSubscription.id;
+                    const latestMessageId = messages[messages.length-1].id;
+  
+                    if(newMessageId === latestMessageId){
+                      return;
+                    }
+                  }
+                 
+
+
+                  const newObject = Object.assign({}, prev, {
+                    GetChat: {
+                      ...prev.GetChat,
+                      chat: {
+                        ...prev.GetChat.chat,
+                        messages: [
+                          ...prev.GetChat.chat.messages,
+                          subscriptionData.data.MessageSubscription
+                        ]
+                      }
+                    }
+                  });
+
+                  return newObject;
+                }
+              };
+
+              subscribeToMore(subscribeToMoreOptions);
+
+              return (
+                <SendMessageMutation mutation={SEND_MESSAGE}>
+                  {sendMessageFn => {
+                    this.sendMessageFn = sendMessageFn;
+
+                    return (
+                      <ChatPresenter
+                        data={data}
+                        loading={loading}
+                        userData={userData}
+                        messageText={message}
+                        onInputChange={this.onInputChange}
+                        onSubmit={this.onSubmit}
+                      />
+                    );
+                  }}
+                </SendMessageMutation>
+              );
+            }}
           </ChatQuery>
         )}
       </ProfileQuery>

@@ -48,7 +48,13 @@ const ChatPresenter: React.SFC<IProps> = ({
             {chat.messages &&
               chat.messages.map(message => {
                 if (message) {
-                  return "sibaroma";
+                  return (
+                    <Message
+                      key={message.id}
+                      text={message.text}
+                      mine={message.userId === user.id}
+                    />
+                  );
                 }
                 return null;
               })}

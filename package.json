@@ -41,7 +41,8 @@
     "eject": "react-scripts-ts eject",
     "precodegen": "apollo schema:download --endpoint=http://localhost:4000/graphql",
     "codegen": "apollo codegen:generate src/types/api.d.ts --queries=src/**/*.ts --addTypename --localSchemaFile=schema.json --target=typescript --outputFlat",
-    "deploy": "gh-pages -d dist"
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build"
   },
   "devDependencies": {
     "@types/googlemaps": "^3.30.18",

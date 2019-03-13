@@ -8,6 +8,9 @@ import { WebSocketLink } from "apollo-link-ws";
 import { getMainDefinition } from "apollo-utilities";
 import { toast } from "react-toastify";
 
+const isDev = process.env.NODE_ENV === "development";
+console.log(isDev);
+
 const getToken = () => {
   const token = localStorage.getItem("jwt");
   if (token) {
@@ -29,7 +32,9 @@ const authMiddleware = new ApolloLink((operation: Operation, foward: any) => {
 });
 
 const httpLink = new HttpLink({
-  uri: "http://localhost:4000/graphql"
+  uri: isDev
+    ? "http://localhost:4000/graphql"
+    : "https://vast-retreat-63840.herokuapp.com/graphql"
 });
 
 const wsLink = new WebSocketLink({
@@ -39,7 +44,9 @@ const wsLink = new WebSocketLink({
     },
     reconnect: true
   },
-  uri: "ws://localhost:4000/subscription"
+  uri: isDev
+    ? "ws://localhost:4000/subscription"
+    : "wss://vast-retreat-63840.herokuapp.com/subscription"
 });
 
 const combinedLinks = split(

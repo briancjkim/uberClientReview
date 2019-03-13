@@ -40,6 +40,7 @@ class RideContainer extends React.Component<IProps> {
             variables={{ rideId: parseInt(rideId, 10) }}
           >
             {({ data, loading, subscribeToMore }) => {
+              const { history } = this.props;
               const subscribeOptions = {
                 document: RIDE_SUBSCRIPTION,
                 updateQuery: (prev, { subscriptionData }) => {
@@ -53,7 +54,7 @@ class RideContainer extends React.Component<IProps> {
                   } = subscriptionData;
 
                   if (status === "FINISHED") {
-                    window.location.href = "/";
+                    history.push("/");
                   }
                 }
               };

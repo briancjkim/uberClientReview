@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import { HashRouter, Switch, Route, Redirect } from "react-router-dom";
 import AddPlace from "../../Routes/AddPlace";
 import EditAccount from "../../Routes/EditAccount";
 import FindAddress from "../../Routes/FindAddress";
@@ -17,9 +17,9 @@ interface IProps {
   isLoggedIn: boolean;
 }
 const AppPresenter: React.SFC<IProps> = ({ isLoggedIn }) => (
-  <BrowserRouter>
+  <HashRouter>
     {isLoggedIn ? <LoggedInRoutes /> : <LoggedOutRoutes />}
-  </BrowserRouter>
+  </HashRouter>
 );
 
 const LoggedOutRoutes: React.SFC = () => (
@@ -35,6 +35,7 @@ const LoggedOutRoutes: React.SFC = () => (
 const LoggedInRoutes: React.SFC = () => (
   <Switch>
     <Route path={"/"} exact={true} component={Home} />
+    <Route path={"/uberClientReview"} component={Home} />
     <Route path={"/ride/:rideId"} exact={true} component={Ride} />
     <Route path={"/chat/:chatId"} exact={true} component={Chat} />
     <Route path={"/edit-account"} exact={true} component={EditAccount} />

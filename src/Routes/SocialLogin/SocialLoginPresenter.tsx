@@ -42,6 +42,7 @@ const SocialLoginPresenter: React.SFC<IProps> = ({ loginCallback }) => (
     <BackArrowExtended backTo={"/"} />
     <FacebookLogin
       appId="2333037706730770"
+      redirectUri="/"
       autoLoad={false}
       fields="name,first_name,last_name,email"
       callback={loginCallback}

@@ -62,7 +62,7 @@ class HomeContainer extends React.Component<IProps, IState> {
     isMenuOpen: false,
     lat: 0,
     lng: 0,
-    toAddress: "Sydney",
+    toAddress: "Brisbane",
     toLat: 0,
     toLng: 0,
     distance: "",

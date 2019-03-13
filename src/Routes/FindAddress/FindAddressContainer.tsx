@@ -25,9 +25,11 @@ class FindAddressContainer extends React.Component<IProps, IState> {
     this.mapRef = React.createRef();
   }
   public componentDidMount() {
+    console.log("component Did Mount!");
     navigator.geolocation.getCurrentPosition(
       this.handleGeoSucces,
-      this.handleGeoError
+      this.handleGeoError,
+      { maximumAge: Infinity, timeout: 5000, enableHighAccuracy: true }
     );
   }
   public render() {
@@ -43,6 +45,7 @@ class FindAddressContainer extends React.Component<IProps, IState> {
     );
   }
   public handleGeoSucces: PositionCallback = (positon: Position) => {
+    console.log("called geo success!");
     const {
       coords: { latitude, longitude }
     } = positon;
@@ -58,12 +61,9 @@ class FindAddressContainer extends React.Component<IProps, IState> {
   };
   public loadMap = (lat, lng) => {
     const { google } = this.props;
-    const maps = google.maps;
     const mapNode = ReactDOM.findDOMNode(this.mapRef.current);
-    if (mapNode) {
-      this.loadMap(lat, lng);
-      return;
-    }
+    console.log(this.mapRef);
+    console.log(mapNode);
     const mapConfig: google.maps.MapOptions = {
       center: {
         lat,
@@ -72,7 +72,7 @@ class FindAddressContainer extends React.Component<IProps, IState> {
       disableDefaultUI: true,
       zoom: 15
     };
-    this.map = new maps.Map(mapNode, mapConfig);
+    this.map = new google.maps.Map(mapNode, mapConfig);
     this.map.addListener("dragend", this.handleDragEnd);
   };
   public handleDragEnd = () => {

@@ -38,7 +38,7 @@ const ChatPresenter: React.SFC<IProps> = ({
 }) => {
   const { GetMyProfile: { user = null } = {} } = userData || {};
   const { GetChat: { chat = null } = {} } = data || {};
-  console.log(chat);
+
   return (
     <Container>
       <Header title={"Chat"} />

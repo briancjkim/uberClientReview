@@ -48,24 +48,27 @@ class ChatContainer extends React.Component<IProps, IState> {
             {({ data, loading, subscribeToMore }) => {
               const subscribeToMoreOptions = {
                 document: SUBSCRIBE_TO_MESSAGES,
-                updateQuery: (prev, subscriptionData) => {
+                updateQuery: (prev, { subscriptionData }) => {
                   if (!subscriptionData.data) {
                     return prev;
                   }
-                  const {data:{MessageSubscription}}=subscriptionData;
-                    const {GetChat:{chat:{messages}}}=prev;
+                  const {
+                    data: { MessageSubscription }
+                  } = subscriptionData;
+                  const {
+                    GetChat: {
+                      chat: { messages }
+                    }
+                  } = prev;
 
-                  if(messages.length>0){
+                  if (messages.length > 0) {
                     const newMessageId = MessageSubscription.id;
-                    const latestMessageId = messages[messages.length-1].id;
-  
-                    if(newMessageId === latestMessageId){
+                    const latestMessageId = messages[messages.length - 1].id;
+
+                    if (newMessageId === latestMessageId) {
                       return;
                     }
                   }
-                 
-
-
                   const newObject = Object.assign({}, prev, {
                     GetChat: {
                       ...prev.GetChat,
@@ -73,7 +76,7 @@ class ChatContainer extends React.Component<IProps, IState> {
                         ...prev.GetChat.chat,
                         messages: [
                           ...prev.GetChat.chat.messages,
-                          subscriptionData.data.MessageSubscription
+                          MessageSubscription
                         ]
                       }
                     }

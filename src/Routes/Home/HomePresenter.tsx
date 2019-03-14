@@ -102,7 +102,7 @@ const HomePresenter: React.SFC<IProps> = ({
               name={"toAddress"}
               onChange={onInputChange}
               value={toAddress}
-              onBlur={() => console.log("onblur")}
+              onBlur={onAddressSubmit}
             />
             <ExtendedButton
               onClick={onAddressSubmit}

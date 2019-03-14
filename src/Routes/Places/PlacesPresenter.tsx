@@ -30,10 +30,7 @@ const PlacePresenter: React.SFC<IProps> = ({ data, loading }) => {
       </Helmet>
       <Header title={"Places"} backTo={"/"} />
       <Container>
-        {!loading &&
-          places &&
-          PlacesContainer.length === 0 &&
-          "You have no places"}
+        {!loading && places && places.length === 0 && "You have no places"}
         {!loading &&
           places &&
           places.map(place => (

@@ -54,7 +54,8 @@ class RideContainer extends React.Component<IProps> {
                   } = subscriptionData;
 
                   if (status === "FINISHED") {
-                    history.push("/");
+                    window.location.href =
+                      "https://rlackswhd91.github.io/uberClientReview/#/";
                   }
                 }
               };

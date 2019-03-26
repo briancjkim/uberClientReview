@@ -58,6 +58,7 @@ export const GET_NEARBY_RIDE = gql`
       ok
       error
       ride {
+        status
         id
         pickUpAddress
         dropOffAddress
@@ -85,6 +86,7 @@ export const ACCEPT_RIDE = gql`
 export const SUBSCRIBE_NEARBY_RIDES = gql`
   subscription nearbyRides {
     NearbyRideSubscription {
+      status
       id
       pickUpAddress
       dropOffAddress

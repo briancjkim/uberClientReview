@@ -276,6 +276,7 @@ export interface getRides_GetNearbyRide_ride_passenger {
 
 export interface getRides_GetNearbyRide_ride {
   __typename: "Ride";
+  status: string;
   id: number;
   pickUpAddress: string;
   dropOffAddress: string;
@@ -334,6 +335,7 @@ export interface nearbyRides_NearbyRideSubscription_passenger {
 
 export interface nearbyRides_NearbyRideSubscription {
   __typename: "Ride";
+  status: string;
   id: number;
   pickUpAddress: string;
   dropOffAddress: string;
@@ -603,7 +605,7 @@ export enum StatusOptions {
   CANCLED = "CANCLED",
   FINISHED = "FINISHED",
   ONROUTE = "ONROUTE",
-  REQUESTING = "REQUESTING",
+  REQUESTING = "REQUESTING"
 }
 
 //==============================================================

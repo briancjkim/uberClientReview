@@ -118,7 +118,7 @@ const HomePresenter: React.SFC<IProps> = ({
             value={`Request Ride ($${price})`}
           />
         )}
-        {ride && (
+        {ride && ride.status === "REQUESTING" && (
           <RidePopUp
             id={ride.id}
             pickUpAddress={ride.pickUpAddress}

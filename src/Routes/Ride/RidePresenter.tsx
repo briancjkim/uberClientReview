@@ -84,6 +84,13 @@ const RidePresenter: React.SFC<IProps> = ({ data, userData, updateRideFn }) => {
           <Title>Status</Title>
           <Data>{ride.status}</Data>
           <Buttons>
+            <ExtendedButton
+              value={"Cancle"}
+              onClick={() =>
+                (window.location.href =
+                  "https://rlackswhd91.github.io/uberClientReview/#/")
+              }
+            />
             {ride.driver &&
               ride.driver.id === user.id &&
               ride.status === "ACCEPTED" && (
